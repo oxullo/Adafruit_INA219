@@ -78,12 +78,12 @@ void Adafruit_INA219::wireReadRegister(uint8_t reg, uint16_t *value)
 
 void Adafruit_INA219::setConfiguration(uint16_t configMask)
 {
-    wireWriteRegister(INA219_REG_CONFIG, config);
+    wireWriteRegister(INA219_REG_CONFIG, configMask);
 }
 
 void Adafruit_INA219::setCalibration(uint16_t calValue)
 {
-    wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+    wireWriteRegister(INA219_REG_CALIBRATION, calValue);
 }
 
 /**************************************************************************/
