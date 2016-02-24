@@ -22,10 +22,21 @@ void setup(void)
   // By default the initialization will use the largest range (32V, 2A).  However
   // you can call a setCalibration function to change this range (see comments).
   ina219.begin();
-  // To use a slightly lower 32V, 1A range (higher precision on amps):
-  //ina219.setCalibration_32V_1A();
-  // Or to use a lower 16V, 400mA range (higher precision on volts and amps):
-  //ina219.setCalibration_16V_400mA();
+
+  // Sample calibration value computed for 2A over 100mOhm shunt
+  ina219.setCalibration(4096);
+
+  ina219.setConfiguration(
+        INA219_CONFIG_BVOLTAGERANGE_32V |		    // Bus voltage range up to 32V
+        INA219_CONFIG_GAIN_8_320MV |			    // Lower sensitivity (320mV)
+        INA219_CONFIG_BADCRES_12BIT |			    // Bus ADC resolution
+        INA219_CONFIG_SADCRES_12BIT_1S_532US |	    // Shunt ADC resolution
+        INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS);	// Free conversion
+
+  // Normalisation factors
+  // 1mA/LSB / x uA/LSB (1000uA/LSB / 100uA/LSB = 10)
+  // 2mW/LSB / x mW/LSB (2mW/LSB / 1mW LSB = 2)
+  ina219.setDividers(10, 2);
 
   Serial.println("Measuring voltage and current with INA219 ...");
 }

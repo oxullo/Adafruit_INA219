@@ -89,7 +89,7 @@ void Adafruit_INA219::setCalibration(uint16_t calValue)
 void Adafruit_INA219::setDividers(uint32_t curDiv, uint32_t powDiv)
 {
     ina219_currentDivider_mA = curDiv;
-    ina219_powerDivider_mW = powDiv;     // Power LSB = 1mW per bit (2/1)
+    ina219_powerDivider_mW = powDiv;
 }
 
 /**************************************************************************/
