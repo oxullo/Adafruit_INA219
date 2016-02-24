@@ -122,6 +122,7 @@ class Adafruit_INA219{
   float getCurrent_mA(void);
   void setConfiguration(uint16_t configMask);
   void setCalibration(uint16_t calValue);
+  void setDividers(uint32_t curDiv, uint32_t powDiv);
 
  private:
   uint8_t ina219_i2caddr;

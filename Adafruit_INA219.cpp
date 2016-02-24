@@ -86,6 +86,11 @@ void Adafruit_INA219::setCalibration(uint16_t calValue)
     wireWriteRegister(INA219_REG_CALIBRATION, calValue);
 }
 
+void Adafruit_INA219::setDividers(uint32_t curDiv, uint32_t powDiv)
+{
+    ina219_currentDivider_mA = curDiv;
+    ina219_powerDivider_mW = powDiv;     // Power LSB = 1mW per bit (2/1)
+}
 /**************************************************************************/
 /*! 
     @brief  Configures to INA219 to be able to measure up to 32V and 2A
