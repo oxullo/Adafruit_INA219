@@ -76,6 +76,16 @@ void Adafruit_INA219::wireReadRegister(uint8_t reg, uint16_t *value)
   #endif
 }
 
+void Adafruit_INA219::setConfiguration(uint16_t configMask)
+{
+    wireWriteRegister(INA219_REG_CONFIG, config);
+}
+
+void Adafruit_INA219::setCalibration(uint16_t calValue)
+{
+    wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+}
+
 /**************************************************************************/
 /*! 
     @brief  Configures to INA219 to be able to measure up to 32V and 2A

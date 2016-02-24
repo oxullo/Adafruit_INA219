@@ -120,6 +120,8 @@ class Adafruit_INA219{
   float getBusVoltage_V(void);
   float getShuntVoltage_mV(void);
   float getCurrent_mA(void);
+  void setConfiguration(uint16_t configMask);
+  void setCalibration(uint16_t calValue);
 
  private:
   uint8_t ina219_i2caddr;
