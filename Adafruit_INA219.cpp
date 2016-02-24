@@ -116,8 +116,14 @@ void Adafruit_INA219::begin(uint8_t addr) {
 
 void Adafruit_INA219::begin(void) {
   Wire.begin();    
-  // Set chip to large range config values to start
-  setCalibration_32V_2A();
+
+  // Safe operating parameters
+  setConfiguration(
+        INA219_CONFIG_BVOLTAGERANGE_32V |		    // Bus voltage range up to 32V
+        INA219_CONFIG_GAIN_8_320MV |			    // Lower sensitivity (320mV)
+        INA219_CONFIG_BADCRES_12BIT |			    // Bus ADC resolution
+        INA219_CONFIG_SADCRES_12BIT_1S_532US |	    // Shunt ADC resolution
+        INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS);	// Free conversion
 }
 
 /**************************************************************************/
