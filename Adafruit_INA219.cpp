@@ -83,7 +83,8 @@ void Adafruit_INA219::setConfiguration(uint16_t configMask)
 
 void Adafruit_INA219::setCalibration(uint16_t calValue)
 {
-    wireWriteRegister(INA219_REG_CALIBRATION, calValue);
+    ina219_calValue = calValue;
+    wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
 }
 
 void Adafruit_INA219::setDividers(uint32_t curDiv, uint32_t powDiv)
@@ -162,6 +163,21 @@ int16_t Adafruit_INA219::getCurrent_raw() {
   
   return (int16_t)value;
 }
+
+int16_t Adafruit_INA219::getPower_raw() {
+  uint16_t value;
+
+  // Sometimes a sharp load will reset the INA219, which will
+  // reset the cal register, meaning CURRENT and POWER will
+  // not be available ... avoid this by always setting a cal
+  // value even if it's an unfortunate extra step
+  wireWriteRegister(INA219_REG_CALIBRATION, ina219_calValue);
+
+  // Now we can safely read the CURRENT register!
+  wireReadRegister(INA219_REG_POWER, &value);
+  
+  return (int16_t)value;
+}
  
 /**************************************************************************/
 /*! 
@@ -193,5 +209,11 @@ float Adafruit_INA219::getBusVoltage_V() {
 float Adafruit_INA219::getCurrent_mA() {
   float valueDec = getCurrent_raw();
   valueDec /= ina219_currentDivider_mA;
+  return valueDec;
+}
+
+float Adafruit_INA219::getPower_mW() {
+  float valueDec = getPower_raw();
+  valueDec /= ina219_powerDivider_mW;
   return valueDec;
 }
